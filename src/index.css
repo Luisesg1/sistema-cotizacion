@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased;
+    background: #F7F8FA;
+    color: #111827;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+}
+
+@layer components {
+  .input {
+    @apply w-full bg-white text-[15px] text-gray-900 transition-all duration-150;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    min-height: 44px;
+    outline: none;
+  }
+  .input:hover {
+    border-color: #93C5FD;
+  }
+  .input:focus {
+    border-color: #2563EB;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+  .input::placeholder {
+    color: #CBD5E1;
+  }
+
+  .btn-primary {
+    @apply bg-blue-600 text-white text-sm font-semibold flex items-center gap-2 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed select-none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    min-height: 44px;
+    box-shadow: 0 1px 3px rgba(37,99,235,0.25);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: #1D4ED8;
+    box-shadow: 0 3px 8px rgba(37,99,235,0.3);
+    transform: translateY(-0.5px);
+  }
+
+  .btn-secondary {
+    @apply bg-white text-gray-700 text-sm font-medium flex items-center gap-2 transition-all duration-150 select-none;
+    border: 1.5px solid #E2E8F0;
+    padding: 10px 16px;
+    border-radius: 10px;
+    min-height: 44px;
+  }
+  .btn-secondary:hover {
+    background: #F8FAFC;
+    border-color: #CBD5E1;
+  }
+
+  .btn-danger {
+    @apply bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-sm font-medium transition-colors flex items-center gap-1.5;
+    padding: 8px 14px;
+    border-radius: 8px;
+  }
+
+  .card {
+    background: #FFFFFF;
+    border: 1.5px solid #ECECEC;
+    border-radius: 18px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05), 0 0 1px rgba(0,0,0,0.04);
+  }
+
+  .label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #9CA3AF;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #2563EB;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+}
+
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area { position: absolute; left: 0; top: 0; width: 100%; }
+}
