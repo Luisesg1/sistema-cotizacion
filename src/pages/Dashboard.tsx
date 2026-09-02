@@ -19,8 +19,9 @@ export default function Dashboard() {
   }, [])
 
   const filtradas = cotizaciones.filter(c => {
-    const d = new Date(c.fecha)
-    return d.getMonth() === mesIdx && d.getFullYear() === anio
+    // Parse local (evita corrimiento por zona horaria de "YYYY-MM-DD" como UTC)
+    const [yy, mm] = c.fecha.split('-').map(Number)
+    return (mm - 1) === mesIdx && yy === anio
   })
 
   const cantidad = filtradas.length

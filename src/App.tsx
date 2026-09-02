@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import { EmpresaProvider } from './contexts/EmpresaContext'
-import { isSupabaseConfigured } from './lib/supabase'
+import { isSupabaseConfigured, isDemoMode } from './lib/supabase'
+import { seedDemoData } from './lib/demoSeed'
 import Layout from './components/Layout'
 import Dashboard from './pages/Dashboard'
 import Clientes from './pages/Clientes'
@@ -79,7 +80,8 @@ function AppRoutes() {
 }
 
 export default function App() {
-  if (!isSupabaseConfigured()) return <NotConfigured />
+  if (isDemoMode()) seedDemoData()
+  if (!isDemoMode() && !isSupabaseConfigured()) return <NotConfigured />
 
   return (
     <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>

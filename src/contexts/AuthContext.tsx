@@ -1,6 +1,10 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { Session } from '@supabase/supabase-js'
-import { supabase } from '../lib/supabase'
+import { supabase, isDemoMode } from '../lib/supabase'
+
+const DEMO_SESSION = {
+  user: { email: 'demo@portafolio.cl', id: 'demo-user' },
+} as unknown as Session
 
 interface AuthContextType {
   session: Session | null
@@ -19,11 +23,13 @@ const AuthContext = createContext<AuthContextType>({
 })
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [session, setSession] = useState<Session | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [session, setSession] = useState<Session | null>(isDemoMode() ? DEMO_SESSION : null)
+  const [loading, setLoading] = useState(!isDemoMode())
   const [isRecovery, setIsRecovery] = useState(false)
 
   useEffect(() => {
+    if (isDemoMode()) return   // demo: sesión fija, sin backend
+
     // Listener primero — así PASSWORD_RECOVERY se captura antes de setLoading(false)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setSession(session)
@@ -37,6 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const clearRecovery = () => setIsRecovery(false)
 
   const signOut = async () => {
+    if (isDemoMode()) return   // demo: no cerrar sesión
     await supabase.auth.signOut()
     setSession(null)
   }
